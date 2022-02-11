@@ -1,0 +1,46 @@
+{
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "type": "trait.string",
+                "value": "test__exit_1_key"
+              }
+            ],
+            "type": "operator",
+            "value": "is null"
+          },
+          {
+            "children": [
+              {
+                "type": "trait.timestamp",
+                "value": "test__exit_1_key_joined_at"
+              },
+              {
+                "type": "trait.timestamp",
+                "value": "test__root_1_joined_at"
+              }
+            ],
+            "type": "operator",
+            "value": "<"
+          }
+        ],
+        "type": "operator",
+        "value": "or"
+      },
+      {
+        "children": [
+          {
+            "type": "trait.string",
+            "value": "test__exit_1_key"
+          }
+        ],
+        "type": "operator",
+        "value": "is null"
+      }
+    ],
+    "type": "operator",
+    "value": "and"
+  }

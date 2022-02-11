@@ -1,0 +1,69 @@
+{
+    "type": "operator",
+    "value": "and",
+    "children": [
+      {
+        "type": "operator",
+        "value": "or",
+        "children": [
+          {
+            "type": "operator",
+            "value": "is null",
+            "children": [
+              {
+                "type": "trait.string",
+                "value": "test__exit_1_key"
+              }
+            ]
+          },
+          {
+            "type": "operator",
+            "value": "<",
+            "children": [
+              {
+                "type": "trait.timestamp",
+                "value": "test__exit_1_key_joined_at"
+              },
+              {
+                "type": "trait.timestamp",
+                "value": "test__root_1_hidden_joined_at"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "operator",
+        "value": "or",
+        "children": [
+          {
+            "type": "operator",
+            "value": "is null",
+            "children": [
+              {
+                "type": "trait.string",
+                "value": "test__exit_1_key"
+              }
+            ]
+          },
+          {
+            "type": "operator",
+            "value": "before last",
+            "children": [
+              {
+                "type": "trait.timestamp",
+                "value": "test__exit_1_key_joined_at"
+              },
+              {
+                "type": "constant.integer",
+                "value": "11",
+                "options": {
+                  "valueUnit": "second"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
