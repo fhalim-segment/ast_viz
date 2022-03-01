@@ -1,0 +1,605 @@
+{
+  "initial": "cohort_rddpwuxidr",
+  "states": {
+    "cohort_rddpwuxidr": {
+      "meta": {
+        "type": "cohort",
+        "name": "Pass Holders",
+        "ast": {
+          "type": "operator",
+          "value": "is not null",
+          "children": [
+            {
+              "type": "trait.string",
+              "value": "pass_id"
+            }
+          ]
+        },
+        "backfill": true,
+        "includeAnonymousProfiles": false
+      },
+      "on": {
+        "split_t7q8yleho8": {
+          "target": "split_t7q8yleho8"
+        }
+      }
+    },
+    "split_t7q8yleho8": {
+      "meta": {
+        "type": "split"
+      },
+      "on": {
+        "split_t7q8yleho8_true": {
+          "target": "split_t7q8yleho8_true"
+        },
+        "split_t7q8yleho8_false": {
+          "target": "split_t7q8yleho8_false"
+        }
+      }
+    },
+    "split_t7q8yleho8_true": {
+      "meta": {
+        "type": "splitBranch",
+        "ast": {
+          "type": "operator",
+          "value": ">=",
+          "children": [
+            {
+              "type": "event.count",
+              "value": "EM Push Notification Tapped",
+              "children": [
+                {
+                  "type": "operator",
+                  "value": "=",
+                  "children": [
+                    {
+                      "type": "event.property.string",
+                      "value": "campaign_name"
+                    },
+                    {
+                      "type": "constant.string",
+                      "value": "Ski Rental"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "constant.integer",
+              "value": "1"
+            }
+          ]
+        },
+        "name": ""
+      },
+      "on": {
+        "split_780yj79efr": {
+          "target": "split_780yj79efr"
+        }
+      }
+    },
+    "split_t7q8yleho8_false": {
+      "meta": {
+        "type": "splitBranch",
+        "ast": {
+          "type": "operator",
+          "value": "not",
+          "children": [
+            {
+              "type": "operator",
+              "value": ">=",
+              "children": [
+                {
+                  "type": "event.count",
+                  "value": "EM Push Notification Tapped",
+                  "children": [
+                    {
+                      "type": "operator",
+                      "value": "=",
+                      "children": [
+                        {
+                          "type": "event.property.string",
+                          "value": "campaign_name"
+                        },
+                        {
+                          "type": "constant.string",
+                          "value": "Ski Rental"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "constant.integer",
+                  "value": "1"
+                }
+              ]
+            }
+          ]
+        },
+        "name": ""
+      },
+      "on": {
+        "sync_03qnge5ouh": {
+          "target": "sync_03qnge5ouh"
+        }
+      }
+    },
+    "placeholder_b93lhuxeqn": {
+      "meta": {
+        "type": "placeholder"
+      }
+    },
+    "sync_03qnge5ouh": {
+      "meta": {
+        "type": "sync",
+        "name": "Rental Campaign Not Clicked",
+        "destinations": [
+          {
+            "id": "604fc84c0be4e72b32ac1cea",
+            "metadataId": "5a4d24dcc5836400017188f6",
+            "name": "Personas Facebook Custom Audiences",
+            "logo": "https://cdn.filepicker.io/api/file/6KPTpxDRBySZm7dYVeDD",
+            "type": "destination",
+            "settings": {}
+          },
+          {
+            "id": "tcqV4oNcBYM24un47SSBLP",
+            "metadataId": "55d3d3aea3c",
+            "name": "Postgres (Postgres)",
+            "logo": "https://d3hotuclm6if1r.cloudfront.net/logos/postgres-default.svg",
+            "type": "warehouse",
+            "settings": {
+              "send_identify": true,
+              "send_track": false,
+              "send_mobile_ids": false,
+              "audience_entered_event": "Audience Entered",
+              "audience_exited_event": "Audience Exited"
+            }
+          },
+          {
+            "id": "606a81f2e249ce76eee76604",
+            "metadataId": "606a815a931a627eedefa30d",
+            "name": "Twilio Email (Resorts2)",
+            "logo": "https://public-segment-devcenter-production.s3.amazonaws.com/a7ed4bb4-904c-404f-b882-1cd596aeb79f.png",
+            "type": "destination",
+            "settings": {
+              "send_identify": true,
+              "send_track": false,
+              "audience_entered_event": "Audience Entered",
+              "audience_exited_event": "Audience Exited"
+            }
+          }
+        ]
+      },
+      "on": {
+        "placeholder_b93lhuxeqn": {
+          "target": "placeholder_b93lhuxeqn"
+        }
+      }
+    },
+    "split_780yj79efr": {
+      "meta": {
+        "type": "split"
+      },
+      "on": {
+        "split_780yj79efr_true": {
+          "target": "split_780yj79efr_true"
+        },
+        "split_780yj79efr_false": {
+          "target": "split_780yj79efr_false"
+        }
+      }
+    },
+    "split_780yj79efr_true": {
+      "meta": {
+        "type": "splitBranch",
+        "ast": {
+          "type": "operator",
+          "value": ">=",
+          "children": [
+            {
+              "type": "event.count",
+              "value": "Booking Completed"
+            },
+            {
+              "type": "constant.integer",
+              "value": "1"
+            }
+          ]
+        },
+        "name": ""
+      },
+      "on": {
+        "multi_split_ajz36v1psq": {
+          "target": "multi_split_ajz36v1psq"
+        }
+      }
+    },
+    "split_780yj79efr_false": {
+      "meta": {
+        "type": "splitBranch",
+        "ast": {
+          "type": "operator",
+          "value": "not",
+          "children": [
+            {
+              "type": "operator",
+              "value": ">=",
+              "children": [
+                {
+                  "type": "event.count",
+                  "value": "Booking Completed"
+                },
+                {
+                  "type": "constant.integer",
+                  "value": "1"
+                }
+              ]
+            }
+          ]
+        },
+        "name": ""
+      },
+      "on": {
+        "split_t40o1bxoih": {
+          "target": "split_t40o1bxoih"
+        }
+      }
+    },
+    "multi_split_ajz36v1psq": {
+      "meta": {
+        "type": "multiSplit"
+      },
+      "on": {
+        "multi_split_branch_8jib2j3pc5": {
+          "target": "multi_split_branch_8jib2j3pc5"
+        },
+        "multi_split_branch_83syeisivi": {
+          "target": "multi_split_branch_83syeisivi"
+        },
+        "multi_split_branch_q19q4g70fq": {
+          "target": "multi_split_branch_q19q4g70fq"
+        }
+      }
+    },
+    "multi_split_branch_8jib2j3pc5": {
+      "meta": {
+        "type": "multiSplitBranch"
+      },
+      "on": {
+        "criteria_rpfgpa79nh": {
+          "target": "criteria_rpfgpa79nh"
+        }
+      }
+    },
+    "placeholder_e8l20e3mp6": {
+      "meta": {
+        "type": "placeholder"
+      }
+    },
+    "multi_split_branch_83syeisivi": {
+      "meta": {
+        "type": "multiSplitBranch"
+      },
+      "on": {
+        "criteria_fr1jy0qcw6": {
+          "target": "criteria_fr1jy0qcw6"
+        }
+      }
+    },
+    "placeholder_7lgg6g99vq": {
+      "meta": {
+        "type": "placeholder"
+      }
+    },
+    "multi_split_branch_q19q4g70fq": {
+      "meta": {
+        "type": "multiSplitBranch"
+      },
+      "on": {
+        "criteria_83h21btpdf": {
+          "target": "criteria_83h21btpdf"
+        }
+      }
+    },
+    "placeholder_imbc4qsf8v": {
+      "meta": {
+        "type": "placeholder"
+      }
+    },
+    "criteria_rpfgpa79nh": {
+      "meta": {
+        "type": "criteria",
+        "ast": {
+          "type": "operator",
+          "value": "=",
+          "children": [
+            {
+              "type": "trait.string",
+              "value": "preferred_channel"
+            },
+            {
+              "type": "constant.string",
+              "value": "text"
+            }
+          ]
+        },
+        "name": ""
+      },
+      "on": {
+        "sync_1epmzwjtl4": {
+          "target": "sync_1epmzwjtl4"
+        }
+      }
+    },
+    "criteria_fr1jy0qcw6": {
+      "meta": {
+        "type": "criteria",
+        "ast": {
+          "type": "operator",
+          "value": "=",
+          "children": [
+            {
+              "type": "trait.string",
+              "value": "preferred_channel"
+            },
+            {
+              "type": "constant.string",
+              "value": "phone"
+            }
+          ]
+        },
+        "name": ""
+      },
+      "on": {
+        "sync_sswlhem1fo": {
+          "target": "sync_sswlhem1fo"
+        }
+      }
+    },
+    "criteria_83h21btpdf": {
+      "meta": {
+        "type": "criteria",
+        "ast": {
+          "type": "operator",
+          "value": "=",
+          "children": [
+            {
+              "type": "trait.string",
+              "value": "preferred_channel"
+            },
+            {
+              "type": "constant.string",
+              "value": "email"
+            }
+          ]
+        },
+        "name": ""
+      },
+      "on": {
+        "sync_axuzyrqfie": {
+          "target": "sync_axuzyrqfie"
+        }
+      }
+    },
+    "sync_1epmzwjtl4": {
+      "meta": {
+        "type": "sync",
+        "name": "Preferred Channel as Text",
+        "destinations": [
+          {
+            "id": "606a81f2e249ce76eee76604",
+            "metadataId": "606a815a931a627eedefa30d",
+            "name": "Twilio Email (Resorts2)",
+            "logo": "https://public-segment-devcenter-production.s3.amazonaws.com/a7ed4bb4-904c-404f-b882-1cd596aeb79f.png",
+            "type": "destination",
+            "settings": {
+              "send_identify": true,
+              "send_track": false,
+              "audience_entered_event": "Audience Entered",
+              "audience_exited_event": "Audience Exited"
+            }
+          }
+        ]
+      },
+      "on": {
+        "placeholder_e8l20e3mp6": {
+          "target": "placeholder_e8l20e3mp6"
+        }
+      }
+    },
+    "sync_sswlhem1fo": {
+      "meta": {
+        "type": "sync",
+        "name": "Preferred Channel as Phone",
+        "destinations": [
+          {
+            "id": "606a81f2e249ce76eee76604",
+            "metadataId": "606a815a931a627eedefa30d",
+            "name": "Twilio Email (Resorts2)",
+            "logo": "https://public-segment-devcenter-production.s3.amazonaws.com/a7ed4bb4-904c-404f-b882-1cd596aeb79f.png",
+            "type": "destination",
+            "settings": {
+              "send_identify": true,
+              "send_track": false,
+              "audience_entered_event": "Audience Entered",
+              "audience_exited_event": "Audience Exited"
+            }
+          }
+        ]
+      },
+      "on": {
+        "placeholder_7lgg6g99vq": {
+          "target": "placeholder_7lgg6g99vq"
+        }
+      }
+    },
+    "sync_axuzyrqfie": {
+      "meta": {
+        "type": "sync",
+        "name": "Preferred Channel as Email",
+        "destinations": [
+          {
+            "id": "606a81f2e249ce76eee76604",
+            "metadataId": "606a815a931a627eedefa30d",
+            "name": "Twilio Email (Resorts2)",
+            "logo": "https://public-segment-devcenter-production.s3.amazonaws.com/a7ed4bb4-904c-404f-b882-1cd596aeb79f.png",
+            "type": "destination",
+            "settings": {
+              "send_identify": true,
+              "send_track": false,
+              "audience_entered_event": "Audience Entered",
+              "audience_exited_event": "Audience Exited"
+            }
+          }
+        ]
+      },
+      "on": {
+        "placeholder_imbc4qsf8v": {
+          "target": "placeholder_imbc4qsf8v"
+        }
+      }
+    },
+    "split_t40o1bxoih": {
+      "meta": {
+        "type": "split"
+      },
+      "on": {
+        "split_t40o1bxoih_true": {
+          "target": "split_t40o1bxoih_true"
+        },
+        "split_t40o1bxoih_false": {
+          "target": "split_t40o1bxoih_false"
+        }
+      }
+    },
+    "split_t40o1bxoih_true": {
+      "meta": {
+        "type": "splitBranch",
+        "ast": {
+          "type": "operator",
+          "value": ">",
+          "children": [
+            {
+              "type": "trait.float",
+              "value": "number_of_bookings"
+            },
+            {
+              "type": "constant.float",
+              "value": "1"
+            }
+          ]
+        },
+        "name": ""
+      },
+      "on": {
+        "sync_crk4ygxf9f": {
+          "target": "sync_crk4ygxf9f"
+        }
+      }
+    },
+    "placeholder_qfqwbjv320": {
+      "meta": {
+        "type": "placeholder"
+      }
+    },
+    "split_t40o1bxoih_false": {
+      "meta": {
+        "type": "splitBranch",
+        "ast": {
+          "type": "operator",
+          "value": "not",
+          "children": [
+            {
+              "type": "operator",
+              "value": ">",
+              "children": [
+                {
+                  "type": "trait.float",
+                  "value": "number_of_bookings"
+                },
+                {
+                  "type": "constant.float",
+                  "value": "1"
+                }
+              ]
+            }
+          ]
+        },
+        "name": ""
+      },
+      "on": {
+        "sync_aguyquzzey": {
+          "target": "sync_aguyquzzey"
+        }
+      }
+    },
+    "placeholder_btaahv9xex": {
+      "meta": {
+        "type": "placeholder"
+      }
+    },
+    "sync_crk4ygxf9f": {
+      "meta": {
+        "type": "sync",
+        "name": "More than 1 Bookings",
+        "destinations": [
+          {
+            "id": "604fc84c0be4e72b32ac1cea",
+            "metadataId": "5a4d24dcc5836400017188f6",
+            "name": "Personas Facebook Custom Audiences",
+            "logo": "https://cdn.filepicker.io/api/file/6KPTpxDRBySZm7dYVeDD",
+            "type": "destination",
+            "settings": {}
+          },
+          {
+            "id": "606a81f2e249ce76eee76604",
+            "metadataId": "606a815a931a627eedefa30d",
+            "name": "Twilio Email (Resorts2)",
+            "logo": "https://public-segment-devcenter-production.s3.amazonaws.com/a7ed4bb4-904c-404f-b882-1cd596aeb79f.png",
+            "type": "destination",
+            "settings": {
+              "send_identify": true,
+              "send_track": false,
+              "audience_entered_event": "Audience Entered",
+              "audience_exited_event": "Audience Exited"
+            }
+          }
+        ]
+      },
+      "on": {
+        "placeholder_qfqwbjv320": {
+          "target": "placeholder_qfqwbjv320"
+        }
+      }
+    },
+    "sync_aguyquzzey": {
+      "meta": {
+        "type": "sync",
+        "name": "Just 1 booking",
+        "destinations": [
+          {
+            "id": "606a81f2e249ce76eee76604",
+            "metadataId": "606a815a931a627eedefa30d",
+            "name": "Twilio Email (Resorts2)",
+            "logo": "https://public-segment-devcenter-production.s3.amazonaws.com/a7ed4bb4-904c-404f-b882-1cd596aeb79f.png",
+            "type": "destination",
+            "settings": {
+              "send_identify": true,
+              "send_track": false,
+              "audience_entered_event": "Audience Entered",
+              "audience_exited_event": "Audience Exited"
+            }
+          }
+        ]
+      },
+      "on": {
+        "placeholder_btaahv9xex": {
+          "target": "placeholder_btaahv9xex"
+        }
+      }
+    }
+  },
+  "key": "j_o_directed_targeting_for_pass_holders"
+}

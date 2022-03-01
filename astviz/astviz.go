@@ -3,7 +3,7 @@ package astviz
 import (
 	"encoding/json"
 	"fmt"
-	"os"
+	"io"
 	"strings"
 )
 
@@ -16,7 +16,7 @@ func Load(data []byte) (*Node, error) {
 	return &node, nil
 }
 
-func (n *Node) Dump(o *os.File, indent int) {
+func (n *Node) Dump(o io.StringWriter, indent int) {
 	if n == nil {
 		return
 	}
@@ -31,7 +31,7 @@ func (n *Node) Dump(o *os.File, indent int) {
 	}
 	write(o, ")", 0)
 }
-func write(o *os.File, s string, indent int) {
+func write(o io.StringWriter, s string, indent int) {
 	indentChar := "\t"
 	o.WriteString(strings.Repeat(indentChar, indent) + s)
 }
