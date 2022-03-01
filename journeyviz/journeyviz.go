@@ -18,7 +18,8 @@ func Load(data []byte) (*Definition, error) {
 }
 
 func (n *Definition) Dump(o *os.File, indent int) {
-	fmt.Fprintln(o, fmt.Sprintf("@startuml\nhide empty description\n[*] -down-> %s", n.Initial))
+	destsToSources := make(map[Destination][]string, 0)
+	fmt.Fprintln(o, fmt.Sprintf("@startuml\nhide empty description\n[*] --> %s", n.Initial))
 	statesToWalk := []string{n.Initial}
 	for len(statesToWalk) > 0 {
 		stateName := statesToWalk[0]
@@ -41,8 +42,32 @@ func (n *Definition) Dump(o *os.File, indent int) {
 		}
 		if state.On != nil {
 			for k, _ := range state.On {
-				fmt.Fprintln(o, fmt.Sprintf("%s -down-> %s", stateName, k))
+				if n.States[k].Meta.StateType == "placeholder" {
+					continue
+				}
+				fmt.Fprintln(o, fmt.Sprintf("%s --> %s", stateName, k))
 				statesToWalk = append(statesToWalk, k)
+			}
+		}
+
+		if state.Meta.Destinations != nil {
+			for _, dest := range *state.Meta.Destinations {
+				sources := destsToSources[dest]
+				destsToSources[dest] = append(sources, stateName)
+			}
+		}
+	}
+	if len(destsToSources) > 0 {
+		fmt.Fprintln(o, "state Destinations {")
+		for dest, _ := range destsToSources {
+			fmt.Fprintln(o, fmt.Sprintf("  state \"%s\" as %s", dest.Name, dest.Id))
+			fmt.Fprintln(o, fmt.Sprintf("  %s: Type: %s", dest.Id, dest.DestinationType))
+			fmt.Fprintln(o, fmt.Sprintf("  %s: MetadataId: %s", dest.Id, dest.MetadataId))
+		}
+		fmt.Fprintln(o, "}")
+		for dest, sources := range destsToSources {
+			for _, source := range sources {
+				fmt.Fprintln(o, fmt.Sprintf("%s --> %s", source, dest.Id))
 			}
 		}
 	}

@@ -15,7 +15,15 @@ type State struct {
 }
 
 type StateMeta struct {
-	StateType string       `json:"type"`
-	Name      string       `json:"name"`
-	Ast       *astviz.Node `json:"ast"`
+	StateType    string         `json:"type"`
+	Name         string         `json:"name"`
+	Ast          *astviz.Node   `json:"ast"`
+	Destinations *[]Destination `json:"destinations"`
+}
+
+type Destination struct {
+	Id              string `json:"id"`
+	MetadataId      string `json:"metadataId"`
+	Name            string `json:"name"`
+	DestinationType string `json:"type"`
 }
