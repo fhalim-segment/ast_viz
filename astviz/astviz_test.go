@@ -13,6 +13,10 @@ func TestHung1(t *testing.T) {
 	testFile("../examples/example2.json", t)
 }
 
+func TestOptions(t *testing.T) {
+	testFile("../examples/example3.json", t)
+}
+
 func testFile(fileName string, t *testing.T) {
 	file, err := os.Open(fileName)
 	defer file.Close()

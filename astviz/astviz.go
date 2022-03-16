@@ -29,6 +29,14 @@ func (n *Node) Dump(o io.StringWriter, indent int) {
 		write(o, "\n", 0)
 		c.Dump(o, indent+1)
 	}
+	if n.Options != nil {
+		write(o, "\n", 0)
+		write(o, "('options {", indent+1)
+		for k, v := range n.Options {
+			write(o, fmt.Sprintf("%v: %v, ", k, v), 0)
+		}
+		write(o, ")", 0)
+	}
 	write(o, ")", 0)
 }
 func write(o io.StringWriter, s string, indent int) {
