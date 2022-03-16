@@ -1,0 +1,26 @@
+{
+  "children": [
+    {
+      "children": [
+        { "type": "trait.string", "value": "favorite_color" },
+        { "type": "constant.string", "value": "blue" }
+      ],
+      "type": "operator",
+      "value": "="
+    },
+    {
+      "children": [
+        {
+          "options": { "duration": 21600, "durationUnit": "hour" },
+          "type": "event.count",
+          "value": "didStuff"
+        },
+        { "type": "constant.integer", "value": "1" }
+      ],
+      "type": "operator",
+      "value": "\u003e="
+    }
+  ],
+  "type": "operator",
+  "value": "and"
+}
