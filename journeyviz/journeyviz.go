@@ -25,16 +25,26 @@ func (n *Definition) Dump(o *os.File, indent int) {
 		stateName := statesToWalk[0]
 		statesToWalk = statesToWalk[1:]
 		state := n.States[stateName]
+		stateTitle := stateName
+		fmt.Fprintln(o, fmt.Sprintf("state \"%s\" as %s", stateTitle, stateName))
+		fmt.Fprintln(o, fmt.Sprintf("%s: type:  %s", stateName, state.Meta.StateType))
+		if state.Meta.Name != "" {
+			fmt.Fprintln(o, fmt.Sprintf("%s: name:  %s", stateName, state.Meta.Name))
+		}
+		if state.Meta.StateType == "delay" && state.Meta.Duration != nil {
+			fmt.Fprintln(o, fmt.Sprintf("%s: duration:  %d", stateName, *state.Meta.Duration))
+		}
+
 		if state.Meta.Ast != nil {
 			s := ""
 			buf := bytes.NewBufferString(s)
 			state.Meta.Ast.Dump(buf, 0)
 			astMessage := buf.String()
-			stateTitle := stateName
+
 			if len(strings.Trim(state.Meta.Name, " ")) > 0 {
 				stateTitle = state.Meta.Name
 			}
-			fmt.Fprintln(o, fmt.Sprintf("state \"%s\" as %s", stateTitle, stateName))
+
 			lines := strings.Split(astMessage, "\n")
 			for _, line := range lines {
 				fmt.Fprintln(o, fmt.Sprintf("%s: |  %s", stateName, line))

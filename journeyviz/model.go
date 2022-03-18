@@ -18,6 +18,7 @@ type StateMeta struct {
 	StateType    string         `json:"type"`
 	Name         string         `json:"name"`
 	Ast          *astviz.Node   `json:"ast"`
+	Duration     *int64         `json:"duration"`
 	Destinations *[]Destination `json:"destinations"`
 }
 
