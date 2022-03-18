@@ -18,8 +18,14 @@ func Load(data []byte) (*Definition, error) {
 }
 
 func (n *Definition) Dump(o *os.File, indent int) {
+	exitStateName := "theExitState"
+	exitStateColor := "#red"
 	destsToSources := make(map[Destination][]string, 0)
 	fmt.Fprintln(o, fmt.Sprintf("@startuml\nhide empty description\n[*] --> %s", n.Initial))
+	hasExit := false
+	if n.ExitSettings.ExitConditions != nil && len(*n.ExitSettings.ExitConditions) > 0 {
+		hasExit = true
+	}
 	statesToWalk := []string{n.Initial}
 	for len(statesToWalk) > 0 {
 		stateName := statesToWalk[0]
@@ -50,6 +56,9 @@ func (n *Definition) Dump(o *os.File, indent int) {
 				fmt.Fprintln(o, fmt.Sprintf("%s: |  %s", stateName, line))
 			}
 		}
+		if hasExit && (state.Meta.Ast != nil || state.Meta.StateType == "sync") {
+			fmt.Fprintln(o, fmt.Sprintf("%s -down[%s,dashed]-> %s", stateName, exitStateColor, exitStateName))
+		}
 		if state.On != nil {
 			for k, _ := range state.On {
 				if n.States[k].Meta.StateType == "placeholder" {
@@ -79,6 +88,13 @@ func (n *Definition) Dump(o *os.File, indent int) {
 			for _, source := range sources {
 				fmt.Fprintln(o, fmt.Sprintf("%s --> %s", source, dest.Id))
 			}
+		}
+	}
+	if hasExit {
+		fmt.Fprintln(o, fmt.Sprintf("state \"Exit\" as %s %s", exitStateName, exitStateColor))
+		for _, condition := range *n.ExitSettings.ExitConditions {
+			conditionString := fmt.Sprintf("%v", condition)
+			fmt.Fprintln(o, fmt.Sprintf("%s: ()", exitStateName, conditionString))
 		}
 	}
 	fmt.Fprintln(o, "@enduml")

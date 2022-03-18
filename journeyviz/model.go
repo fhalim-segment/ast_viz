@@ -5,9 +5,16 @@ import (
 )
 
 type Definition struct {
-	Initial string           `json:"initial"`
-	States  map[string]State `json:"states"`
+	Initial      string           `json:"initial"`
+	States       map[string]State `json:"states"`
+	ExitSettings *ExitSettings    `json: "exitSettings"`
 }
+
+type ExitSettings struct {
+	ExitConditions *[]ExitCondition `json:"exitConditions"`
+}
+
+type ExitCondition = map[string]interface{}
 
 type State struct {
 	Meta StateMeta

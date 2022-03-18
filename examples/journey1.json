@@ -601,5 +601,9 @@
       }
     }
   },
+  "exitSettings": {
+    "exitConditions": [{ "type": "time", "durationSeconds": 86400 }],
+    "reentryCondition": { "type": "none" }
+  },
   "key": "j_o_directed_targeting_for_pass_holders"
 }
